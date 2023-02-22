@@ -1,10 +1,6 @@
 package com.datagear.amlserver.rest;
 
-import com.datagear.amlserver.entity.Account.Account;
-import com.datagear.amlserver.entity.Account.AccountClass;
-import com.datagear.amlserver.entity.Branch.Branch;
-import com.datagear.amlserver.entity.Customer;
-import com.datagear.amlserver.entity.Employee.Employee;
+import com.datagear.amlserver.entity.Account;
 import com.datagear.amlserver.service.account.AccountService;
 import com.datagear.amlserver.service.branch.BranchService;
 import com.datagear.amlserver.service.customer.CustomerService;
@@ -20,22 +16,9 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class AccountRestController {
     private AccountService accountService;
-    private EmployeeService employeeService;
-    private CustomerService customerService;
-    private BranchService branchService;
 
     @Autowired
-    public AccountRestController(
-            AccountService accountService,
-            EmployeeService employeeService,
-            BranchService branchService,
-            CustomerService customerService
-    ) {
-        this.accountService = accountService;
-        this.employeeService = employeeService;
-        this.branchService = branchService;
-        this.customerService = customerService;
-    }
+    public AccountRestController(AccountService accountService) {this.accountService = accountService;}
 
     @GetMapping("/accounts")
     public List<Account> findAll() {
@@ -56,49 +39,18 @@ public class AccountRestController {
     }
 
     @PostMapping("/accounts")
-    public Account addAccount(@RequestBody AccountClass theAccountClass) {
+    public Account addAccount(@RequestBody Account theAccount) {
+        theAccount.setId(0);
+        accountService.save(theAccount);
 
-        Optional<Employee> employee = employeeService.findById(theAccountClass.getEmployee());
-        Optional<Branch> branch = branchService.findById(theAccountClass.getBranch());
-        Optional<Customer> customer = customerService.findById(theAccountClass.getCustomer());
-
-        Account account = new Account(
-                0,
-                theAccountClass.getBalance(),
-                theAccountClass.getType(),
-                employee.get(),
-                branch.get(),
-                customer.get()
-        );
-        accountService.save(account);
-
-        return account;
+        return theAccount;
     }
 
     @PutMapping("/accounts")
-    public Account updateAccount(@RequestBody AccountClass theAccountClass) {
+    public Account updateAccount(@RequestBody Account theAccount) {
 
-            Optional<Employee> employee = employeeService.findById(theAccountClass.getEmployee());
-            Optional<Branch> branch = branchService.findById(theAccountClass.getBranch());
-            Optional<Customer> customer = customerService.findById(theAccountClass.getCustomer());
-
-            Optional<Account> account = accountService.findById(theAccountClass.getId());
-
-            Account newAccount = account.get();
-
-            if (account.isEmpty()) {
-
-            } else {
-
-                newAccount.setBalance(theAccountClass.getBalance());
-                newAccount.setType(theAccountClass.getType());
-                newAccount.setEmployee(employee.get());
-                newAccount.setBranch(branch.get());
-                newAccount.setCustomer(customer.get());
-
-                accountService.save(newAccount);
-            }
-        return newAccount;
+        accountService.save(theAccount);
+        return theAccount;
     }
 
     @DeleteMapping("/accounts/{accountsId}")

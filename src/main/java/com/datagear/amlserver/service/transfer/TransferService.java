@@ -1,6 +1,6 @@
 package com.datagear.amlserver.service.transfer;
 
-import com.datagear.amlserver.entity.Transfer.Transfer;
+import com.datagear.amlserver.entity.Transfer;
 
 import java.util.List;
 import java.util.Optional;

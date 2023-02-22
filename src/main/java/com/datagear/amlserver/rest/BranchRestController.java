@@ -1,9 +1,7 @@
 package com.datagear.amlserver.rest;
 
 import com.datagear.amlserver.dao.BankRepository;
-import com.datagear.amlserver.entity.Bank;
-import com.datagear.amlserver.entity.Branch.Branch;
-import com.datagear.amlserver.entity.Branch.BranchClass;
+import com.datagear.amlserver.entity.Branch;
 import com.datagear.amlserver.service.branch.BranchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,14 +14,10 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class BranchRestController {
     private BranchService branchService;
-    private final BankRepository bankRepository;
+
 
     @Autowired
-    public BranchRestController(BranchService branchService,
-                                BankRepository bankRepository) {
-        this.branchService = branchService;
-        this.bankRepository = bankRepository;
-    }
+    public BranchRestController(BranchService branchService) {this.branchService = branchService;}
 
     @GetMapping("/branches")
     public List<Branch> findAll() {
@@ -44,13 +38,10 @@ public class BranchRestController {
     }
 
     @PostMapping("/branches")
-    public Branch addBranch(@RequestBody BranchClass theBranchClass) {
-//        theBranch.setId(0);
-        Optional<Bank> bank = bankRepository.findById(theBranchClass.getBank());
-        Branch newBranch = new Branch(0, theBranchClass.getAddress(), theBranchClass.getCity(), bank.get());
-        branchService.save(newBranch);
-
-        return newBranch;
+    public Branch addBranch(@RequestBody Branch theBranch) {
+        theBranch.setId(0);
+        branchService.save(theBranch);
+        return theBranch;
     }
 
     @PutMapping("/branches")

@@ -1,6 +1,5 @@
-package com.datagear.amlserver.entity.Employee;
+package com.datagear.amlserver.entity;
 
-import com.datagear.amlserver.entity.Branch.Branch;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,7 +24,10 @@ public class Employee {
     private Integer salary;
     @Column(name = "email")
     private String email;
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "branch_id")
     private Branch branch;
+    @ManyToOne
+    @JoinColumn(name = "bank_id")
+    private Bank bank;
 }

@@ -9,8 +9,8 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
-//@EnableConfigurationProperties
-//@EntityScan(basePackages = {"com.datagear.amlserver"})
+@EnableConfigurationProperties
+@EntityScan(basePackages = {"com.datagear.amlserver"})
 public class AmlServerApplication {
 
     public static void main(String[] args) {

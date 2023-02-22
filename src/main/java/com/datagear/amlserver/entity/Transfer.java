@@ -1,7 +1,5 @@
-package com.datagear.amlserver.entity.Transfer;
+package com.datagear.amlserver.entity;
 
-import com.datagear.amlserver.entity.Account.Account;
-import com.datagear.amlserver.entity.Transaction.Transaction;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,10 +18,10 @@ public class Transfer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
-    @ManyToOne()
+    @OneToOne
     @JoinColumn(name = "transaction_id")
     private Transaction transaction;
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "reciever_id")
     private Account reciever;
 

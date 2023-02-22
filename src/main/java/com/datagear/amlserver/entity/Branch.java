@@ -1,6 +1,5 @@
-package com.datagear.amlserver.entity.Branch;
+package com.datagear.amlserver.entity;
 
-import com.datagear.amlserver.entity.Bank;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,7 +25,7 @@ public class Branch {
     @Column(name = "city")
     private String city;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name="bank_id")
     private Bank bank;
 }

@@ -15,9 +15,7 @@ public class BankRestController {
     private BankService bankService;
 
     @Autowired
-    public BankRestController(BankService bankService) {
-        this.bankService = bankService;
-    }
+    public BankRestController(BankService bankService) {this.bankService = bankService;}
 
     @GetMapping("/banks")
     public List<Bank> findAll() {

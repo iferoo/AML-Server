@@ -1,7 +1,7 @@
 package com.datagear.amlserver.service.transaction;
 
 import com.datagear.amlserver.dao.TransactionRepository;
-import com.datagear.amlserver.entity.Transaction.Transaction;
+import com.datagear.amlserver.entity.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

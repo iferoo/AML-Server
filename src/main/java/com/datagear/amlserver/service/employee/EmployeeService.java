@@ -1,6 +1,6 @@
 package com.datagear.amlserver.service.employee;
 
-import com.datagear.amlserver.entity.Employee.Employee;
+import com.datagear.amlserver.entity.Employee;
 
 import java.util.List;
 import java.util.Optional;

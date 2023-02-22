@@ -15,19 +15,10 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class CustomerRestController {
     private CustomerService customerService;
-    private BankService bankService;
-    private BranchService branchService;
+
 
     @Autowired
-    public CustomerRestController(
-            CustomerService customerService,
-            BankService bankService,
-            BranchService branchService
-    ) {
-        this.customerService = customerService;
-        this.bankService = bankService;
-        this.branchService = branchService;
-    }
+    public CustomerRestController(CustomerService customerService) {this.customerService = customerService;}
 
     @GetMapping("/customers")
     public List<Customer> findAll() {
@@ -51,9 +42,7 @@ public class CustomerRestController {
     public Customer addCustomer(@RequestBody Customer theCustomer) {
 
         theCustomer.setId(0);
-
         customerService.save(theCustomer);
-
         return theCustomer;
     }
 

@@ -1,11 +1,9 @@
 package com.datagear.amlserver.rest;
 
-import com.datagear.amlserver.entity.Account.Account;
-import com.datagear.amlserver.entity.Transaction.Transaction;
-import com.datagear.amlserver.entity.Transfer.Transfer;
-import com.datagear.amlserver.entity.Transfer.TransferClass;
+import com.datagear.amlserver.entity.Account;
+import com.datagear.amlserver.entity.Transaction;
+import com.datagear.amlserver.entity.Transfer;
 import com.datagear.amlserver.service.account.AccountService;
-import com.datagear.amlserver.service.transaction.TransactionService;
 import com.datagear.amlserver.service.transfer.TransferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,17 +16,11 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class TransferRestController {
     private TransferService transferService;
-    private TransactionService transactionService;
     private AccountService accountService;
 
     @Autowired
-    public TransferRestController(
-            TransferService transferService,
-            TransactionService transactionService,
-            AccountService accountService
-    ) {
+    public TransferRestController(TransferService transferService, AccountService accountService) {
         this.transferService = transferService;
-        this.transactionService = transactionService;
         this.accountService = accountService;
     }
 
@@ -41,7 +33,6 @@ public class TransferRestController {
     public Transfer getTransfer(@PathVariable int transfersId) {
 
         Optional<Transfer> transfer = transferService.findById(transfersId);
-
         if (transfer.isPresent()) {
             Transfer theTransfer = transfer.get();
             return theTransfer;
@@ -51,64 +42,37 @@ public class TransferRestController {
     }
 
     @PostMapping("/transfers")
-    public Transfer addTransfer(@RequestBody TransferClass theTransferClass) {
+    public Transfer addTransfer(@RequestBody Transfer theTransfer) {
 
-        Optional<Transaction> transaction = transactionService.findById(theTransferClass.getTransaction());
+        Transaction transaction = theTransfer.getTransaction();
 
         // - balance of sender
-        Account sender = transaction.get().getAccount();
-        sender.setBalance(sender.getBalance() - transaction.get().getAmount());
-        transaction.get().setAccount(sender);
-
+        Account sender = transaction.getAccount();
+        sender.setBalance(sender.getBalance() - transaction.getAmount());
+        transaction.setAccount(sender);
+        accountService.save(sender);
         // + balance of sender
-        Optional<Account> reciever = accountService.findById(theTransferClass.getReciever());
-        reciever.get().setBalance(reciever.get().getBalance() + transaction.get().getAmount());
+        Account reciever = theTransfer.getReciever();
+        reciever.setBalance(reciever.getBalance() + transaction.getAmount());
+        accountService.save(reciever);
 
-        Transfer transfer = new Transfer(
-                0,
-                transaction.get(),
-                reciever.get(),
-                theTransferClass.getStatus());
+        //save changed data
+        theTransfer.setTransaction(transaction);
+        theTransfer.setReciever(reciever);
 
-        transferService.save(transfer);
+        transferService.save(theTransfer);
 
-        return transfer;
-    }
-
-
-    @PutMapping("/transfers")
-    public Transfer updateTransfer(@RequestBody TransferClass theTransferClass) {
-
-        Optional<Transaction> transaction = transactionService.findById(theTransferClass.getTransaction());
-        Optional<Account> reciever = accountService.findById(theTransferClass.getReciever());
-
-        Optional<Transfer> transfer = transferService.findById(theTransferClass.getId());
-
-
-        if (transfer.isEmpty()) {
-            throw new RuntimeException();
-        } else {
-            Transfer newTransfer = transfer.get();
-            newTransfer.setTransaction(transaction.get());
-            newTransfer.setReciever(reciever.get());
-            newTransfer.setStatus(theTransferClass.getStatus());
-            transferService.save(newTransfer);
-            return newTransfer;
-        }
-
+        return theTransfer;
     }
 
     @DeleteMapping("/transfers/{transfersId}")
     public String deleteTransfer(@PathVariable int transfersId) {
 
         Optional<Transfer> transfer = transferService.findById(transfersId);
-
         // throw exception if null
-
         if (transfer.isEmpty()) {
             throw new RuntimeException("Transfer id not found - " + transfersId);
         }
-
         transferService.deleteById(transfersId);
 
         return "Deleted transfer id - " + transfersId;

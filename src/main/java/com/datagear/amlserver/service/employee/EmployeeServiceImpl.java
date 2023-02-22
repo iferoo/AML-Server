@@ -1,7 +1,7 @@
 package com.datagear.amlserver.service.employee;
 
 import com.datagear.amlserver.dao.EmployeeRepository;
-import com.datagear.amlserver.entity.Employee.Employee;
+import com.datagear.amlserver.entity.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

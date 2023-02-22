@@ -1,7 +1,7 @@
 package com.datagear.amlserver.service.branch;
 
 import com.datagear.amlserver.dao.BranchRepository;
-import com.datagear.amlserver.entity.Branch.Branch;
+import com.datagear.amlserver.entity.Branch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

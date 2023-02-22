@@ -1,6 +1,6 @@
 package com.datagear.amlserver.service.transaction;
 
-import com.datagear.amlserver.entity.Transaction.Transaction;
+import com.datagear.amlserver.entity.Transaction;
 
 import java.util.List;
 import java.util.Optional;

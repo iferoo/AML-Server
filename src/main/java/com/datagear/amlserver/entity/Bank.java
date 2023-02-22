@@ -3,8 +3,6 @@ package com.datagear.amlserver.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,8 +19,4 @@ public class Bank {
     @Column(name="name")
     private String name;
 
-//    @OneToMany(mappedBy="bank",
-//            cascade= {CascadeType.PERSIST, CascadeType.MERGE,
-//                    CascadeType.DETACH, CascadeType.REFRESH})
-//    private List<Branch> branches;
 }
