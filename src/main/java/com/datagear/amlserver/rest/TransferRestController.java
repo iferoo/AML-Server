@@ -54,12 +54,20 @@ public class TransferRestController {
     public Transfer addTransfer(@RequestBody TransferClass theTransferClass) {
 
         Optional<Transaction> transaction = transactionService.findById(theTransferClass.getTransaction());
-        Optional<Account> account = accountService.findById(theTransferClass.getReciever());
+
+        // - balance of sender
+        Account sender = transaction.get().getAccount();
+        sender.setBalance(sender.getBalance() - transaction.get().getAmount());
+        transaction.get().setAccount(sender);
+
+        // + balance of sender
+        Optional<Account> reciever = accountService.findById(theTransferClass.getReciever());
+        reciever.get().setBalance(reciever.get().getBalance() + transaction.get().getAmount());
 
         Transfer transfer = new Transfer(
                 0,
                 transaction.get(),
-                account.get(),
+                reciever.get(),
                 theTransferClass.getStatus());
 
         transferService.save(transfer);
