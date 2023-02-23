@@ -23,17 +23,30 @@ public class BranchServiceImpl implements BranchService {
     }
 
     @Override
-    public Optional<Branch> findById(int theId) {
-        return branchRepository.findById(theId);
+    public Branch findById(int branchId) {
+
+        Optional<Branch> branch = branchRepository.findById(branchId);
+
+        if (branch.isPresent()) {
+            return branch.get();
+        } else {
+            throw new RuntimeException("Bank id not found - " + branchId);
+        }
     }
 
     @Override
-    public void save(Branch theBranch) {
-        branchRepository.save(theBranch);
-    }
+    public void save(Branch theBranch) {branchRepository.save(theBranch);}
 
     @Override
-    public void deleteById(int theId) {
-        branchRepository.deleteById(theId);
+    public Branch deleteById(int branchId) {
+
+        Optional<Branch> branch = branchRepository.findById(branchId);
+        // throw exception if null
+        if (branch.isPresent()) {
+            branchRepository.deleteById(branchId);
+            return branch.get();
+        } else {
+            throw new RuntimeException("Employee id not found - " + branchId);
+        }
     }
 }

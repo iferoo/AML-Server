@@ -23,8 +23,14 @@ public class BankServiceImpl implements BankService {
     }
 
     @Override
-    public Optional<Bank> findById(int theId) {
-        return bankRepository.findById(theId);
+    public Bank findById(int bankId) {
+
+        Optional<Bank> bank = bankRepository.findById(bankId);
+        if (bank.isPresent()) {
+            return bank.get();
+        } else {
+            throw new RuntimeException("Bank id not found - " + bankId);
+        }
     }
 
     @Override
@@ -33,7 +39,17 @@ public class BankServiceImpl implements BankService {
     }
 
     @Override
-    public void deleteById(int theId) {
-        bankRepository.deleteById(theId);
+    public Bank deleteById(int bankId) {
+
+        Optional<Bank> bank = bankRepository.findById(bankId);
+
+        if (bank.isPresent()) {
+            bankRepository.deleteById(bankId);
+            return bank.get();
+
+        } else {
+            // throw exception if null
+            throw new RuntimeException("Employee id not found - " + bankId);
+        }
     }
 }

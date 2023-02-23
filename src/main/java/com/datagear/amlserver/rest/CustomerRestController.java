@@ -1,14 +1,11 @@
 package com.datagear.amlserver.rest;
 
 import com.datagear.amlserver.entity.Customer;
-import com.datagear.amlserver.service.bank.BankService;
-import com.datagear.amlserver.service.branch.BranchService;
 import com.datagear.amlserver.service.customer.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -18,24 +15,18 @@ public class CustomerRestController {
 
 
     @Autowired
-    public CustomerRestController(CustomerService customerService) {this.customerService = customerService;}
+    public CustomerRestController(CustomerService customerService) {
+        this.customerService = customerService;
+    }
 
     @GetMapping("/customers")
     public List<Customer> findAll() {
         return customerService.findAll();
     }
 
-    @GetMapping("/customers/{customersId}")
-    public Customer getCustomer(@PathVariable int customersId) {
-
-        Optional<Customer> employee = customerService.findById(customersId);
-
-        if (employee.isPresent()) {
-            Customer theCustomer = employee.get();
-            return theCustomer;
-        } else {
-            throw new RuntimeException("Bank id not found - " + customersId);
-        }
+    @GetMapping("/customers/{customerId}")
+    public Customer getCustomer(@PathVariable int customerId) {
+        return customerService.findById(customerId);
     }
 
     @PostMapping("/customers")
@@ -50,23 +41,11 @@ public class CustomerRestController {
     public Customer updateCustomer(@RequestBody Customer theCustomer) {
 
         customerService.save(theCustomer);
-
         return theCustomer;
     }
 
-    @DeleteMapping("/customers/{customersId}")
-    public String deleteCustomer(@PathVariable int customersId) {
-
-        Optional<Customer> employee = customerService.findById(customersId);
-
-        // throw exception if null
-
-        if (employee.isEmpty()) {
-            throw new RuntimeException("Customer id not found - " + customersId);
-        }
-
-        customerService.deleteById(customersId);
-
-        return "Deleted employee id - " + customersId;
+    @DeleteMapping("/customers/{customerId}")
+    public Customer deleteCustomer(@PathVariable int customerId) {
+        return customerService.deleteById(customerId);
     }
 }

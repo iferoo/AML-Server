@@ -23,8 +23,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Optional<Employee> findById(int theId) {
-        return employeeRepository.findById(theId);
+    public Employee findById(int employeeId) {
+
+        Optional<Employee> employee = employeeRepository.findById(employeeId);
+
+        if (employee.isPresent()) {
+            return employee.get();
+        } else {
+            throw new RuntimeException("Bank id not found - " + employeeId);
+        }
     }
 
     @Override
@@ -33,7 +40,16 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void deleteById(int theId) {
-        employeeRepository.deleteById(theId);
+    public Employee deleteById(int employeeId) {
+
+        Optional<Employee> employee = employeeRepository.findById(employeeId);
+        if (employee.isPresent()) {
+            employeeRepository.deleteById(employeeId);
+            return employee.get();
+        } else {
+            // throw exception if null
+            throw new RuntimeException("Employee id not found - " + employeeId);
+        }
+
     }
 }

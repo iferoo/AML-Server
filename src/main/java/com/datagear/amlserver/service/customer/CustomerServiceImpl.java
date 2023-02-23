@@ -23,8 +23,14 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Optional<Customer> findById(int theId) {
-        return customerRepository.findById(theId);
+    public Customer findById(int customerId) {
+
+        Optional<Customer> customer = customerRepository.findById(customerId);
+        if (customer.isPresent()) {
+            return customer.get();
+        } else {
+            throw new RuntimeException("Bank id not found - " + customerId);
+        }
     }
 
     @Override
@@ -33,7 +39,16 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void deleteById(int theId) {
-        customerRepository.deleteById(theId);
+    public Customer deleteById(int customerId) {
+
+        Optional<Customer> customer = customerRepository.findById(customerId);
+
+        if (customer.isPresent()) {
+            customerRepository.deleteById(customerId);
+            return customer.get();
+        } else {
+            // throw exception if null
+            throw new RuntimeException("Customer id not found - " + customerId);
+        }
     }
 }

@@ -8,9 +8,9 @@ import java.util.Optional;
 public interface BranchService {
     public List<Branch> findAll();
 
-    public Optional<Branch> findById(int theId);
+    public Branch findById(int branchId);
 
     public void save(Branch theBranch);
 
-    public void deleteById(int theId);
+    public Branch deleteById(int branchId);
 }

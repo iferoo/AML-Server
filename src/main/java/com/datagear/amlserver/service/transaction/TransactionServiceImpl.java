@@ -23,8 +23,15 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public Optional<Transaction> findById(int theId) {
-        return transactionRepository.findById(theId);
+    public Transaction findById(int transactionId) {
+
+        Optional<Transaction> transaction = transactionRepository.findById(transactionId);
+
+        if (transaction.isPresent()) {
+            return transaction.get();
+        } else {
+            throw new RuntimeException("Bank id not found - " + transactionId);
+        }
     }
 
     @Override
@@ -33,7 +40,17 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public void deleteById(int theId) {
-        transactionRepository.deleteById(theId);
+    public Transaction deleteById(int transactionId) {
+
+        Optional<Transaction> transaction = transactionRepository.findById(transactionId);
+
+        if (transaction.isPresent()) {
+
+            transactionRepository.deleteById(transactionId);
+            return transaction.get();
+        } else {
+            // throw exception if null
+            throw new RuntimeException("Transaction id not found - " + transactionId);
+        }
     }
 }

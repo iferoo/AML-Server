@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -14,26 +13,19 @@ import java.util.Optional;
 public class TransactionRestController {
     private TransactionService transactionService;
 
-
     @Autowired
-    public TransactionRestController(TransactionService transactionService) {this.transactionService = transactionService;}
+    public TransactionRestController(TransactionService transactionService) {
+        this.transactionService = transactionService;
+    }
 
     @GetMapping("/transactions")
     public List<Transaction> findAll() {
         return transactionService.findAll();
     }
 
-    @GetMapping("/transactions/{transactionsId}")
-    public Transaction getTransaction(@PathVariable int transactionsId) {
-
-        Optional<Transaction> transaction = transactionService.findById(transactionsId);
-
-        if (transaction.isPresent()) {
-            Transaction theTransaction = transaction.get();
-            return theTransaction;
-        } else {
-            throw new RuntimeException("Bank id not found - " + transactionsId);
-        }
+    @GetMapping("/transactions/{transactionId}")
+    public Transaction getTransaction(@PathVariable int transactionId) {
+        return transactionService.findById(transactionId);
     }
 
     @PostMapping("/transactions")
@@ -50,17 +42,8 @@ public class TransactionRestController {
     }
 
 
-    @DeleteMapping("/transactions/{transactionsId}")
-    public Transaction deleteTransaction(@PathVariable int transactionsId) {
-
-        Optional<Transaction> transaction = transactionService.findById(transactionsId);
-
-        // throw exception if null
-        if (transaction.isEmpty()) {
-            throw new RuntimeException("Transaction id not found - " + transactionsId);
-        }
-        transactionService.deleteById(transactionsId);
-
-        return transaction.get();
+    @DeleteMapping("/transactions/{transactionId}")
+    public Transaction deleteTransaction(@PathVariable int transactionId) {
+        return transactionService.deleteById(transactionId);
     }
 }

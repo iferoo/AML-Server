@@ -3,14 +3,13 @@ package com.datagear.amlserver.service.transfer;
 import com.datagear.amlserver.entity.Transfer;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface TransferService {
     public List<Transfer> findAll();
 
-    public Optional<Transfer> findById(int theId);
+    public Transfer findById(int transferId);
 
-    public void save(Transfer theTransfer);
+    public Transfer addTransfer(Transfer theTransfer);
 
-    public void deleteById(int theId);
+    public Transfer deleteById(int transferId);
 }

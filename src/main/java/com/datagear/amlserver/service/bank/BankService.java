@@ -8,9 +8,9 @@ import java.util.Optional;
 public interface BankService {
     public List<Bank> findAll();
 
-    public Optional<Bank> findById(int theId);
+    public Bank findById(int theId);
 
     public void save(Bank theBank);
 
-    public void deleteById(int theId);
+    public Bank deleteById(int theId);
 }

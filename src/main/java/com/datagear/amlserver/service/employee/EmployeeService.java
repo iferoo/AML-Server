@@ -3,14 +3,13 @@ package com.datagear.amlserver.service.employee;
 import com.datagear.amlserver.entity.Employee;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface EmployeeService {
     public List<Employee> findAll();
 
-    public Optional<Employee> findById(int theId);
+    public Employee findById(int employeeId);
 
     public void save(Employee theEmployee);
 
-    public void deleteById(int theId);
+    public Employee deleteById(int employeeId);
 }

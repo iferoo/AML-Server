@@ -18,13 +18,16 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<Account> findAll() {
-        return accountRepository.findAll();
-    }
+    public List<Account> findAll() {return accountRepository.findAll();}
 
     @Override
-    public Optional<Account> findById(int theId) {
-        return accountRepository.findById(theId);
+    public Account findById(int accountId) {
+        Optional<Account> account = accountRepository.findById(accountId);
+        if (account.isPresent()) {
+            return account.get();
+        } else {
+            throw new RuntimeException("Bank id not found - " + accountId);
+        }
     }
 
     @Override
@@ -33,7 +36,16 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void deleteById(int theId) {
-        accountRepository.deleteById(theId);
+    public Account deleteById(int accountId) {
+
+        Optional<Account> account = accountRepository.findById(accountId);
+
+        if (account.isPresent()) {
+            accountRepository.deleteById(accountId);
+            return account.get();
+        } else {
+            // throw exception if null
+            throw new RuntimeException("Account id not found - " + accountId);
+        }
     }
 }

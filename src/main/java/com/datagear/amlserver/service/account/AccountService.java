@@ -8,9 +8,9 @@ import java.util.Optional;
 public interface AccountService {
     public List<Account> findAll();
 
-    public Optional<Account> findById(int theId);
+    public Account findById(int theId);
 
     public void save(Account theAccount);
 
-    public void deleteById(int theId);
+    public Account deleteById(int theId);
 }
