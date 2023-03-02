@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,16 +18,19 @@ import lombok.ToString;
 public class Branch {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column
     private int id;
-
-    @Column(name = "address")
+    @Column
     private String address;
-
-    @Column(name = "city")
+    @Column
     private String city;
-
     @ManyToOne
     @JoinColumn(name="bank_id")
     private Bank bank;
+    @Column(columnDefinition = "timestamp default current_timestamp")
+    private LocalDateTime createdAt;
+    @Column(columnDefinition = "boolean default false")
+    private Boolean isDeleted;
+    @Column(columnDefinition = "timestamp")
+    private LocalDateTime deletedAt;
 }

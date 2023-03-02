@@ -3,6 +3,8 @@ package com.datagear.amlserver.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,10 +15,15 @@ import lombok.*;
 public class Bank {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column
     private int id;
-
-    @Column(name="name")
+    @Column
     private String name;
+    @Column(columnDefinition = "timestamp default current_timestamp")
+    private LocalDateTime createdAt;
+    @Column(columnDefinition = "boolean default false")
+    private Boolean isDeleted;
+    @Column(columnDefinition = "timestamp")
+    private LocalDateTime deletedAt;
 
 }

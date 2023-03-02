@@ -35,15 +35,4 @@ public class TransactionRestController {
         return theTransaction;
     }
 
-    @PutMapping("/transactions")
-    public Transaction updateTransaction(@RequestBody Transaction theTransaction) {
-        transactionService.save(theTransaction);
-        return theTransaction;
-    }
-
-
-    @DeleteMapping("/transactions/{transactionId}")
-    public Transaction deleteTransaction(@PathVariable int transactionId) {
-        return transactionService.deleteById(transactionId);
-    }
 }

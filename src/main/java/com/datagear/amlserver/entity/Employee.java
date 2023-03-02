@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,13 +18,13 @@ import lombok.ToString;
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column
     private int id;
-    @Column(name = "name")
+    @Column
     private String name;
-    @Column(name = "salary")
+    @Column
     private Integer salary;
-    @Column(name = "email")
+    @Column
     private String email;
     @ManyToOne
     @JoinColumn(name = "branch_id")
@@ -30,4 +32,11 @@ public class Employee {
     @ManyToOne
     @JoinColumn(name = "bank_id")
     private Bank bank;
+
+    @Column(columnDefinition = "timestamp default current_timestamp")
+    private LocalDateTime createdAt;
+    @Column(columnDefinition = "boolean default false")
+    private Boolean isDeleted;
+    @Column(columnDefinition = "timestamp")
+    private LocalDateTime deletedAt;
 }

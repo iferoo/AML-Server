@@ -1,10 +1,12 @@
 package com.datagear.amlserver.service.customer;
 
 import com.datagear.amlserver.dao.CustomerRepository;
+import com.datagear.amlserver.entity.Bank;
 import com.datagear.amlserver.entity.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,8 +46,11 @@ public class CustomerServiceImpl implements CustomerService {
         Optional<Customer> customer = customerRepository.findById(customerId);
 
         if (customer.isPresent()) {
-            customerRepository.deleteById(customerId);
-            return customer.get();
+            Customer deletedCustomer = customer.get();
+            deletedCustomer.setIsDeleted(true);
+            deletedCustomer.setDeletedAt(LocalDateTime.now());
+            customerRepository.save(deletedCustomer);
+            return deletedCustomer;
         } else {
             // throw exception if null
             throw new RuntimeException("Customer id not found - " + customerId);

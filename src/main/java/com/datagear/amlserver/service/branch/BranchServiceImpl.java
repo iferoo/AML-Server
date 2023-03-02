@@ -1,20 +1,25 @@
 package com.datagear.amlserver.service.branch;
 
+import com.datagear.amlserver.dao.BankRepository;
 import com.datagear.amlserver.dao.BranchRepository;
 import com.datagear.amlserver.entity.Branch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class BranchServiceImpl implements BranchService {
     private BranchRepository branchRepository;
+    private final BankRepository bankRepository;
 
     @Autowired
-    public BranchServiceImpl(BranchRepository branchRepository) {
+    public BranchServiceImpl(BranchRepository branchRepository,
+                             BankRepository bankRepository) {
         this.branchRepository = branchRepository;
+        this.bankRepository = bankRepository;
     }
 
     @Override
@@ -35,18 +40,24 @@ public class BranchServiceImpl implements BranchService {
     }
 
     @Override
-    public void save(Branch theBranch) {branchRepository.save(theBranch);}
+    public void save(Branch theBranch) {
+        branchRepository.save(theBranch);
+    }
 
     @Override
     public Branch deleteById(int branchId) {
 
         Optional<Branch> branch = branchRepository.findById(branchId);
-        // throw exception if null
+
         if (branch.isPresent()) {
-            branchRepository.deleteById(branchId);
-            return branch.get();
+            Branch deletedBranch = branch.get();
+            deletedBranch.setIsDeleted(true);
+            deletedBranch.setDeletedAt(LocalDateTime.now());
+            branchRepository.save(deletedBranch);
+            return deletedBranch;
         } else {
-            throw new RuntimeException("Employee id not found - " + branchId);
+            // throw exception if null
+            throw new RuntimeException("Branch id not found - " + branchId);
         }
     }
 }

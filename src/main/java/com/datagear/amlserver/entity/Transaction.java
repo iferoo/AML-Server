@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -18,17 +19,24 @@ import java.util.Date;
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column
     private int id;
-    @Column(name = "method")
+    @Column
     private String method;
-    @Column(name = "operation")
+    @Column
     private String operation;
-    @Column(name = "amount")
+    @Column
     private Integer amount;
-    @Column(name = "date")
-    private Date date;
+    @Column
+    private LocalDateTime date;
     @ManyToOne
     @JoinColumn(name = "account_id")
     private Account account;
+
+    @Column(columnDefinition = "timestamp default current_timestamp")
+    private LocalDateTime createdAt;
+    @Column(columnDefinition = "boolean default false")
+    private Boolean isDeleted;
+    @Column
+    private LocalDateTime deletedAt;
 }

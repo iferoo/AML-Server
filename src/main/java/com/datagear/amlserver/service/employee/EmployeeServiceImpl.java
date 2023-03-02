@@ -5,6 +5,7 @@ import com.datagear.amlserver.entity.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,8 +45,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         Optional<Employee> employee = employeeRepository.findById(employeeId);
         if (employee.isPresent()) {
-            employeeRepository.deleteById(employeeId);
-            return employee.get();
+            Employee deletedEmployee = employee.get();
+            deletedEmployee.setIsDeleted(true);
+            deletedEmployee.setDeletedAt(LocalDateTime.now());
+            employeeRepository.save(deletedEmployee);
+            return deletedEmployee;
         } else {
             // throw exception if null
             throw new RuntimeException("Employee id not found - " + employeeId);

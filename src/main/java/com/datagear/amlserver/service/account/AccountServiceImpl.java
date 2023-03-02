@@ -2,9 +2,11 @@ package com.datagear.amlserver.service.account;
 
 import com.datagear.amlserver.dao.AccountRepository;
 import com.datagear.amlserver.entity.Account;
+import com.datagear.amlserver.entity.Bank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,8 +43,11 @@ public class AccountServiceImpl implements AccountService {
         Optional<Account> account = accountRepository.findById(accountId);
 
         if (account.isPresent()) {
-            accountRepository.deleteById(accountId);
-            return account.get();
+            Account deletedAccount = account.get();
+            deletedAccount.setIsDeleted(true);
+            deletedAccount.setDeletedAt(LocalDateTime.now());
+            accountRepository.save(deletedAccount);
+            return deletedAccount;
         } else {
             // throw exception if null
             throw new RuntimeException("Account id not found - " + accountId);

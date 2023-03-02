@@ -3,11 +3,13 @@ package com.datagear.amlserver.service.transfer;
 import com.datagear.amlserver.dao.AccountRepository;
 import com.datagear.amlserver.dao.TransferRepository;
 import com.datagear.amlserver.entity.Account;
+import com.datagear.amlserver.entity.Bank;
 import com.datagear.amlserver.entity.Transaction;
 import com.datagear.amlserver.entity.Transfer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -71,8 +73,11 @@ public class TransferServiceImpl implements TransferService {
 
         Optional<Transfer> transfer = transferRepository.findById(transferId);
         if (transfer.isPresent()) {
-            transferRepository.deleteById(transferId);
-            return transfer.get();
+            Transfer deletedTransfer = transfer.get();
+            deletedTransfer.setIsDeleted(true);
+            deletedTransfer.setDeletedAt(LocalDateTime.now());
+            transferRepository.save(deletedTransfer);
+            return deletedTransfer;
         } else {
             // throw exception if null
             throw new RuntimeException("Transfer id not found - " + transferId);

@@ -36,9 +36,4 @@ public class TransferRestController {
     public Transfer addTransfer(@RequestBody Transfer theTransfer) {
         return transferService.addTransfer(theTransfer);
     }
-
-    @DeleteMapping("/transfers/{transferId}")
-    public Transfer deleteTransfer(@PathVariable int transferId) {
-        return transferService.deleteById(transferId);
-    }
 }

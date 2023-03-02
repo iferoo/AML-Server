@@ -1,10 +1,12 @@
 package com.datagear.amlserver.service.transaction;
 
 import com.datagear.amlserver.dao.TransactionRepository;
+import com.datagear.amlserver.entity.Bank;
 import com.datagear.amlserver.entity.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,8 +48,11 @@ public class TransactionServiceImpl implements TransactionService {
 
         if (transaction.isPresent()) {
 
-            transactionRepository.deleteById(transactionId);
-            return transaction.get();
+            Transaction deletedTransaction = transaction.get();
+            deletedTransaction.setIsDeleted(true);
+            deletedTransaction.setDeletedAt(LocalDateTime.now());
+            transactionRepository.save(deletedTransaction);
+            return deletedTransaction;
         } else {
             // throw exception if null
             throw new RuntimeException("Transaction id not found - " + transactionId);

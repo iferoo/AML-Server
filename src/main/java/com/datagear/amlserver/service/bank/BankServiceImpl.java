@@ -5,6 +5,7 @@ import com.datagear.amlserver.entity.Bank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,12 +45,16 @@ public class BankServiceImpl implements BankService {
         Optional<Bank> bank = bankRepository.findById(bankId);
 
         if (bank.isPresent()) {
-            bankRepository.deleteById(bankId);
-            return bank.get();
+//            bankRepository.deleteById(bankId);
+            Bank deletedBank = bank.get();
+            deletedBank.setIsDeleted(true);
+            deletedBank.setDeletedAt(LocalDateTime.now());
+            bankRepository.save(deletedBank);
+            return deletedBank;
 
         } else {
             // throw exception if null
-            throw new RuntimeException("Employee id not found - " + bankId);
+            throw new RuntimeException("Bank id not found - " + bankId);
         }
     }
 }

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -18,14 +19,19 @@ import java.util.List;
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column
     private int id;
-
-    @Column(name = "name")
+    @Column
     private String name;
-    @Column(name = "address")
+    @Column
     private String address;
-    @Column(name = "email")
+    @Column
     private String email;
+    @Column(columnDefinition = "timestamp default current_timestamp")
+    private LocalDateTime createdAt;
+    @Column(columnDefinition = "boolean default false")
+    private Boolean isDeleted;
+    @Column(columnDefinition = "timestamp")
+    private LocalDateTime deletedAt;
 
 }
