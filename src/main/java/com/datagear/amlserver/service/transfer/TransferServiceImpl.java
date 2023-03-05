@@ -3,13 +3,11 @@ package com.datagear.amlserver.service.transfer;
 import com.datagear.amlserver.dao.AccountRepository;
 import com.datagear.amlserver.dao.TransferRepository;
 import com.datagear.amlserver.entity.Account;
-import com.datagear.amlserver.entity.Bank;
 import com.datagear.amlserver.entity.Transaction;
 import com.datagear.amlserver.entity.Transfer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,10 +17,7 @@ public class TransferServiceImpl implements TransferService {
     private final AccountRepository accountRepository;
 
     @Autowired
-    public TransferServiceImpl(
-            TransferRepository transferRepository,
-            AccountRepository accountRepository
-    ) {
+    public TransferServiceImpl(TransferRepository transferRepository, AccountRepository accountRepository) {
         this.transferRepository = transferRepository;
         this.accountRepository = accountRepository;
     }
@@ -44,16 +39,27 @@ public class TransferServiceImpl implements TransferService {
         }
     }
 
+
     @Override
-    public Transfer addTransfer(Transfer theTransfer) {
+    public Transfer save(Transfer theTransfer) {
 
         Transaction transaction = theTransfer.getTransaction();
 
+        if (transaction.getOperation().equals("transfer")) {
+            return tellerTransfer(theTransfer, theTransfer.getTransaction());
+        } else {
+            return tellerDeposite(theTransfer, theTransfer.getTransaction());
+        }
+    }
+
+
+    public Transfer tellerTransfer(Transfer theTransfer, Transaction transaction) {
         // - balance of sender
         Account sender = transaction.getAccount();
         sender.setBalance(sender.getBalance() - transaction.getAmount());
         transaction.setAccount(sender);
         accountRepository.save(sender);
+
         // + balance of sender
         Account reciever = theTransfer.getReciever();
         reciever.setBalance(reciever.getBalance() + transaction.getAmount());
@@ -68,19 +74,43 @@ public class TransferServiceImpl implements TransferService {
         return theTransfer;
     }
 
-    @Override
-    public Transfer deleteById(int transferId) {
+    public Transfer tellerDeposite(Transfer theTransfer, Transaction transaction) {
 
-        Optional<Transfer> transfer = transferRepository.findById(transferId);
-        if (transfer.isPresent()) {
-            Transfer deletedTransfer = transfer.get();
-            deletedTransfer.setIsDeleted(true);
-            deletedTransfer.setDeletedAt(LocalDateTime.now());
-            transferRepository.save(deletedTransfer);
-            return deletedTransfer;
+        Optional<Account> account = accountRepository.findById(transaction.getAccount().getId());
+        if (account.isPresent()) {
+            if (transaction.getOperation().equals("deposit")) {
+                // update balance
+                account.get().setBalance(account.get().getBalance() + transaction.getAmount());
+                //save balance
+                accountRepository.save(account.get());
+                // update transaction account
+                transaction.setAccount(account.get());
+                // update reciever
+                theTransfer.setReciever(account.get());
+                //update transfer transaction
+                theTransfer.setTransaction(transaction);
+                // save transfer
+                transferRepository.save(theTransfer);
+                return theTransfer;
+            } else {
+                // update balance
+                account.get().setBalance(account.get().getBalance() - transaction.getAmount());
+                //save balance
+                accountRepository.save(account.get());
+                // update transaction account
+                transaction.setAccount(account.get());
+                // update reciever
+                theTransfer.setReciever(account.get());
+                //update transfer transaction
+                theTransfer.setTransaction(transaction);
+                // save transfer
+                transferRepository.save(theTransfer);
+                return theTransfer;
+            }
+
         } else {
-            // throw exception if null
-            throw new RuntimeException("Transfer id not found - " + transferId);
+            throw new RuntimeException("Account Not Exist - " + account.get().getId());
+
         }
     }
 }

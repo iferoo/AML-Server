@@ -6,8 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Data
 @AllArgsConstructor
@@ -28,15 +28,10 @@ public class Transaction {
     @Column
     private Integer amount;
     @Column
-    private LocalDateTime date;
+    private LocalDate createdDate;
+    @Column
+    private LocalTime createdTime;
     @ManyToOne
     @JoinColumn(name = "account_id")
     private Account account;
-
-    @Column(columnDefinition = "timestamp default current_timestamp")
-    private LocalDateTime createdAt;
-    @Column(columnDefinition = "boolean default false")
-    private Boolean isDeleted;
-    @Column
-    private LocalDateTime deletedAt;
 }

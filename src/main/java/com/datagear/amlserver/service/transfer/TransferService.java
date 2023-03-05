@@ -9,7 +9,7 @@ public interface TransferService {
 
     public Transfer findById(int transferId);
 
-    public Transfer addTransfer(Transfer theTransfer);
+    public Transfer save(Transfer theTransfer);
 
-    public Transfer deleteById(int transferId);
+//    public Transfer deleteById(int transferId);
 }

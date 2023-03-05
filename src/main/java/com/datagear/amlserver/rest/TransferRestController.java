@@ -34,6 +34,6 @@ public class TransferRestController {
 
     @PostMapping("/transfers")
     public Transfer addTransfer(@RequestBody Transfer theTransfer) {
-        return transferService.addTransfer(theTransfer);
+        return transferService.save(theTransfer);
     }
 }

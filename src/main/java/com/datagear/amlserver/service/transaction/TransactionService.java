@@ -11,5 +11,5 @@ public interface TransactionService {
 
     public void save(Transaction theTransaction);
 
-    public Transaction deleteById(int transactionId);
+//    public Transaction deleteById(int transactionId);
 }

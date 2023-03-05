@@ -5,9 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.hibernate.annotations.ColumnDefault;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
@@ -15,18 +14,24 @@ import java.time.LocalDateTime;
 @ToString
 
 @Entity
-@Table(name = "transfer")
-public class Transfer {
+@Table(name = "alert")
+public class Alert {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private int id;
-    @OneToOne
-    @JoinColumn(name = "transaction_id")
-    private Transaction transaction;
+
     @ManyToOne
-    @JoinColumn(name = "reciever_id")
-    private Account reciever;
+    @JoinColumn(name = "account_id")
+    private Account account;
+
     @Column
-    private String status;
+    private int transactions;
+
+    @Column
+    private String risk;
+
+    @Column
+    private LocalDate createdAt;
+
 }
