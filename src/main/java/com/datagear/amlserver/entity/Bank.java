@@ -19,11 +19,11 @@ public class Bank {
     private int bankId;
     @Column
     private String name;
-    @Column(columnDefinition = "timestamp default current_timestamp")
+    @Column
     private LocalDateTime createdAt;
-    @Column(columnDefinition = "boolean default false")
+    @Column
     private Boolean isDeleted;
-    @Column(columnDefinition = "timestamp")
+    @Column
     private LocalDateTime deletedAt;
 
 }

@@ -27,11 +27,11 @@ public class Customer {
     private String address;
     @Column
     private String email;
-    @Column(columnDefinition = "timestamp default current_timestamp")
+    @Column
     private LocalDateTime createdAt;
-    @Column(columnDefinition = "boolean default false")
+    @Column
     private Boolean isDeleted;
-    @Column(columnDefinition = "timestamp")
+    @Column
     private LocalDateTime deletedAt;
 
 }

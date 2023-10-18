@@ -13,10 +13,10 @@ public class ATM {
     private int atmId;
     @Column
     private String location;
-    @Column(columnDefinition = "timestamp default current_timestamp")
+    @Column
     private LocalDateTime createdAt;
-    @Column(columnDefinition = "boolean default false")
+    @Column
     private Boolean isDeleted;
-    @Column(columnDefinition = "timestamp")
+    @Column
     private LocalDateTime deletedAt;
 }

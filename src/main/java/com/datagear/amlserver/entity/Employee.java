@@ -33,10 +33,10 @@ public class Employee {
     @JoinColumn(name = "bank_id")
     private Bank bank;
 
-    @Column(columnDefinition = "timestamp default current_timestamp")
+    @Column
     private LocalDateTime createdAt;
-    @Column(columnDefinition = "boolean default false")
+    @Column
     private Boolean isDeleted;
-    @Column(columnDefinition = "timestamp")
+    @Column
     private LocalDateTime deletedAt;
 }

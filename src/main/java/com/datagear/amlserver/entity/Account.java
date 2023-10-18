@@ -33,11 +33,11 @@ public class Account {
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
-    @Column(columnDefinition = "timestamp default current_timestamp")
+    @Column
     private LocalDateTime createdAt;
-    @Column(columnDefinition = "boolean default false")
+    @Column
     private Boolean isDeleted;
-    @Column(columnDefinition = "timestamp")
+    @Column
     private LocalDateTime deletedAt;
 
 }
