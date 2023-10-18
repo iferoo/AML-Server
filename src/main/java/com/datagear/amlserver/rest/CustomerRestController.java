@@ -32,7 +32,7 @@ public class CustomerRestController {
     @PostMapping("/customers")
     public Customer addCustomer(@RequestBody Customer theCustomer) {
 
-        theCustomer.setId(0);
+        theCustomer.setCustomerId(0);
         customerService.save(theCustomer);
         return theCustomer;
     }

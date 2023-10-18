@@ -20,7 +20,7 @@ public class Transfer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private int id;
+    private int transferId;
     @OneToOne
     @JoinColumn(name = "transaction_id")
     private Transaction transaction;

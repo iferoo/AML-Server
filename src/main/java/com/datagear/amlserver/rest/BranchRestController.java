@@ -31,7 +31,7 @@ public class BranchRestController {
 
     @PostMapping("/branches")
     public Branch addBranch(@RequestBody Branch theBranch) {
-        theBranch.setId(0);
+        theBranch.setBranchId(0);
         branchService.save(theBranch);
         return theBranch;
     }

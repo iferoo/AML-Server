@@ -30,7 +30,7 @@ public class BankRestController {
 
     @PostMapping("/banks")
     public Bank addBank(@RequestBody Bank theBank) {
-        theBank.setId(0);
+        theBank.setBankId(0);
         bankService.save(theBank);
         return theBank;
     }

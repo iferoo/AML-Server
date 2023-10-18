@@ -30,7 +30,7 @@ public class TransactionRestController {
 
     @PostMapping("/transactions")
     public Transaction addTransaction(@RequestBody Transaction theTransaction) {
-        theTransaction.setId(0);
+        theTransaction.setTransactionId(0);
         transactionService.save(theTransaction);
         return theTransaction;
     }

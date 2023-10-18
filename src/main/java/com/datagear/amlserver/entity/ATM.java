@@ -10,7 +10,7 @@ public class ATM {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private int id;
+    private int atmId;
     @Column
     private String location;
     @Column(columnDefinition = "timestamp default current_timestamp")

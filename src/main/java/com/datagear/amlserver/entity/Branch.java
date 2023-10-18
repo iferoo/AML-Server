@@ -19,7 +19,7 @@ public class Branch {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private int id;
+    private int branchId;
     @Column
     private String address;
     @Column

@@ -76,7 +76,7 @@ public class TransferServiceImpl implements TransferService {
 
     public Transfer tellerDeposite(Transfer theTransfer, Transaction transaction) {
 
-        Optional<Account> account = accountRepository.findById(transaction.getAccount().getId());
+        Optional<Account> account = accountRepository.findById(transaction.getAccount().getAccountId());
         if (account.isPresent()) {
             if (transaction.getOperation().equals("deposit")) {
                 // update balance
@@ -109,7 +109,7 @@ public class TransferServiceImpl implements TransferService {
             }
 
         } else {
-            throw new RuntimeException("Account Not Exist - " + account.get().getId());
+            throw new RuntimeException("Account Not Exist - " + account.get().getAccountId());
 
         }
     }

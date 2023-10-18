@@ -31,7 +31,7 @@ public class AccountRestController {
     @PostMapping("/accounts")
     public Account addAccount(@RequestBody Account theAccount) {
 
-        theAccount.setId(0);
+        theAccount.setAccountId(0);
         accountService.save(theAccount);
         return theAccount;
     }

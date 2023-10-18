@@ -16,7 +16,7 @@ public class Bank {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private int id;
+    private int bankId;
     @Column
     private String name;
     @Column(columnDefinition = "timestamp default current_timestamp")

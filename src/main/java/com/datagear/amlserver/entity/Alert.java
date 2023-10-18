@@ -19,7 +19,7 @@ public class Alert {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private int id;
+    private int alertId;
 
     @ManyToOne
     @JoinColumn(name = "account_id")
