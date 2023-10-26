@@ -24,7 +24,7 @@ public class Branch {
     private String address;
     @Column
     private String city;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="bank_id")
     private Bank bank;
     @Column

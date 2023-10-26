@@ -1,5 +1,7 @@
 package com.datagear.amlserver.config;
 
+import com.datagear.amlserver.entity.auth.Capability;
+import com.datagear.amlserver.entity.auth.Group;
 import com.datagear.amlserver.entity.auth.RegisterRequest;
 import com.datagear.amlserver.entity.auth.User;
 import io.jsonwebtoken.Claims;
@@ -7,14 +9,15 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -39,8 +42,16 @@ public class JwtService {
             User userDetails
     ) {
         Map<String, Object> payload = new HashMap<>();
-        payload.put("firstname", userDetails.getFirstname());
-        payload.put("lastname", userDetails.getLastname());
+        payload.put("firstname", userDetails.getFirstName());
+        payload.put("lastname", userDetails.getLastName());
+//        List<String> roles = userDetails.getRole().stream().map(role -> role.getName()).collect(Collectors.toList());
+        payload.put("role", userDetails.getRole());
+        Set<Group> groups = userDetails.getGroups();
+//        payload.put("group", groups);
+        payload.put("group", groups.stream().map(Group::getName).collect(Collectors.toList()));
+        Set<String> capabilities = new HashSet<>();
+        groups.forEach(group -> group.getCapabilities().forEach(capability -> capabilities.add(capability.getName())));
+        payload.put("capability", capabilities);
 
         return Jwts
                 .builder()

@@ -1,32 +1,36 @@
 package com.datagear.amlserver.rest.auth;
 
-import com.datagear.amlserver.entity.auth.AuthenticationRequest;
-import com.datagear.amlserver.entity.auth.AuthenticationResponse;
+import com.datagear.amlserver.entity.auth.LoginRequest;
+import com.datagear.amlserver.entity.auth.LoginResponse;
 import com.datagear.amlserver.entity.auth.RegisterRequest;
+import com.datagear.amlserver.entity.auth.User;
 import com.datagear.amlserver.service.auth.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
 public class AuthenticationController {
-    private final AuthenticationService service;
+    private final AuthenticationService authenticationService;
+    @GetMapping("/findAll")
+    public ResponseEntity<List<User>> findAll(){
+        return ResponseEntity.ok(authenticationService.findAllUser());
+    }
     @PostMapping("/reqister")
-    public ResponseEntity<AuthenticationResponse> register(
+    public ResponseEntity<LoginResponse> register(
             @RequestBody RegisterRequest request
     ) {
-        return ResponseEntity.ok(service.register(request));
+        return ResponseEntity.ok(authenticationService.register(request));
     }
 
-    @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> authenticate(
-            @RequestBody AuthenticationRequest request
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> authenticate(
+            @RequestBody LoginRequest request
     ) {
-        return ResponseEntity.ok(service.authenticate(request));
+        return ResponseEntity.ok(authenticationService.login(request));
     }
 }

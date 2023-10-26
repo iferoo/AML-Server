@@ -5,37 +5,53 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "_user", schema = "security")
+@Table(name = "_user", schema = "security",uniqueConstraints={@UniqueConstraint(columnNames={"email"})})
 public class User implements UserDetails {
     @Id
     @GeneratedValue
-    private Long userid;
+    private Long userId;
     @Column
-    private String firstname;
+    private String firstName;
     @Column
-    private String lastname;
-    @Column
+    private String lastName;
+    @Column(unique=true)
     private String email;
     @Column
     private String password;
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "_usergroup",
+            schema = "security",
+            joinColumns = {@JoinColumn(name = "userId", referencedColumnName = "userId")},
+            inverseJoinColumns = {@JoinColumn(name = "groupId", referencedColumnName = "groupId")}
+    )
+    private Set<Group> groups;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        Set<GrantedAuthority> authorities=new HashSet<>();
+        groups.forEach(group -> group.getCapabilities().forEach(capability -> authorities.add(new SimpleGrantedAuthority(capability.getName()))));
+        return authorities.stream().toList();
     }
 
     @Override
