@@ -15,7 +15,7 @@ import java.time.LocalTime;
 @ToString
 
 @Entity
-@Table(name = "transactions")
+@Table(name = "transactions", schema = "main")
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

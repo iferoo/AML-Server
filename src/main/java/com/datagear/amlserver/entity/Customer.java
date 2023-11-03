@@ -15,7 +15,7 @@ import java.util.List;
 @ToString
 
 @Entity
-@Table(name = "customer")
+@Table(name = "customer", schema = "main")
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

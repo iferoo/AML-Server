@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @ToString
 
 @Entity
-@Table(name = "branch")
+@Table(name = "branch", schema = "main")
 public class Branch {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @ToString
 
 @Entity
-@Table(name = "transfer")
+@Table(name = "transfer", schema = "main")
 public class Transfer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
