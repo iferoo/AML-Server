@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api")
 public class BankRestController {
@@ -20,7 +19,7 @@ public class BankRestController {
     }
 
     @GetMapping("/banks")
-    @PreAuthorize("hasAuthority('get_bank')")
+//    @PreAuthorize("hasAuthority('get_bank')")
     public List<Bank> findAll() {
         return bankService.findAll();
     }

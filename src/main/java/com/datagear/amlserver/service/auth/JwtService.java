@@ -1,16 +1,12 @@
-package com.datagear.amlserver.config;
+package com.datagear.amlserver.service.auth;
 
-import com.datagear.amlserver.entity.auth.Capability;
 import com.datagear.amlserver.entity.auth.Group;
-import com.datagear.amlserver.entity.auth.RegisterRequest;
 import com.datagear.amlserver.entity.auth.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 

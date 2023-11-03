@@ -1,6 +1,5 @@
 package com.datagear.amlserver.service.auth;
 
-import com.datagear.amlserver.config.JwtService;
 import com.datagear.amlserver.entity.auth.Role;
 import com.datagear.amlserver.entity.auth.User;
 import com.datagear.amlserver.dao.auth.UserRepository;
