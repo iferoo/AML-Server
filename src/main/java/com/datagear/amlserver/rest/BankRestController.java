@@ -3,13 +3,12 @@ package com.datagear.amlserver.rest;
 import com.datagear.amlserver.entity.Bank;
 import com.datagear.amlserver.service.bank.BankService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v1")
 public class BankRestController {
     private BankService bankService;
 
