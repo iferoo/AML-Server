@@ -1,18 +1,16 @@
 package com.datagear.amlserver.service.auth;
 
-import com.datagear.amlserver.entity.auth.Role;
-import com.datagear.amlserver.entity.auth.User;
+import com.datagear.amlserver.entity.auth.*;
 import com.datagear.amlserver.dao.auth.UserRepository;
-import com.datagear.amlserver.entity.auth.LoginRequest;
-import com.datagear.amlserver.entity.auth.LoginResponse;
-import com.datagear.amlserver.entity.auth.RegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -28,12 +26,13 @@ public class AuthenticationService {
     }
 
     public LoginResponse register(RegisterRequest request) {
+        Set<Group> groups = new HashSet<>();
         var user = User.builder()
                 .firstName(request.getFirstname())
                 .lastName(request.getLastname())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .groups(request.getGroup())
+                .groups(groups)
                 .role(Role.USER)
                 .build();
         User createdUser = repository.save(user);

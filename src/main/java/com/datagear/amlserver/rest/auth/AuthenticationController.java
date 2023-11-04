@@ -20,7 +20,7 @@ public class AuthenticationController {
     public ResponseEntity<List<User>> findAll(){
         return ResponseEntity.ok(authenticationService.findAllUser());
     }
-    @PostMapping("/reqister")
+    @PostMapping("/register")
     public ResponseEntity<LoginResponse> register(
             @RequestBody RegisterRequest request
     ) {
