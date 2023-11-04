@@ -1,4 +1,4 @@
-package com.datagear.amlserver.dao;
+package com.datagear.amlserver.repository;
 
 import com.datagear.amlserver.entity.Account;
 import org.springframework.data.jpa.repository.JpaRepository;

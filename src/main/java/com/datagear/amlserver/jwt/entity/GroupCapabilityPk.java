@@ -1,4 +1,4 @@
-package com.datagear.amlserver.entity.auth;
+package com.datagear.amlserver.jwt.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

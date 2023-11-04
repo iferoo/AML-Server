@@ -1,4 +1,4 @@
-package com.datagear.amlserver.entity.auth;
+package com.datagear.amlserver.jwt.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoginResponse {
-    private String token;
+public class LoginRequest {
+    private String email;
+    private String password;
 }

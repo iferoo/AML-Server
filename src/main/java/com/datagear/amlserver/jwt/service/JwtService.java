@@ -1,7 +1,7 @@
-package com.datagear.amlserver.service.auth;
+package com.datagear.amlserver.jwt.service;
 
-import com.datagear.amlserver.entity.auth.Group;
-import com.datagear.amlserver.entity.auth.User;
+import com.datagear.amlserver.jwt.entity.Group;
+import com.datagear.amlserver.jwt.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

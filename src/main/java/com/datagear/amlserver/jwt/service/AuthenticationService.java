@@ -1,7 +1,7 @@
-package com.datagear.amlserver.service.auth;
+package com.datagear.amlserver.jwt.service;
 
-import com.datagear.amlserver.entity.auth.*;
-import com.datagear.amlserver.dao.auth.UserRepository;
+import com.datagear.amlserver.jwt.entity.*;
+import com.datagear.amlserver.jwt.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

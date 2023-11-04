@@ -1,7 +1,6 @@
 package com.datagear.amlserver.service.customer;
 
-import com.datagear.amlserver.dao.CustomerRepository;
-import com.datagear.amlserver.entity.Bank;
+import com.datagear.amlserver.repository.CustomerRepository;
 import com.datagear.amlserver.entity.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

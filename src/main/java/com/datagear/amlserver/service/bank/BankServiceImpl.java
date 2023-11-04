@@ -1,6 +1,6 @@
 package com.datagear.amlserver.service.bank;
 
-import com.datagear.amlserver.dao.BankRepository;
+import com.datagear.amlserver.repository.BankRepository;
 import com.datagear.amlserver.entity.Bank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,10 +1,10 @@
-package com.datagear.amlserver.rest.auth;
+package com.datagear.amlserver.jwt.rest;
 
-import com.datagear.amlserver.entity.auth.LoginRequest;
-import com.datagear.amlserver.entity.auth.LoginResponse;
-import com.datagear.amlserver.entity.auth.RegisterRequest;
-import com.datagear.amlserver.entity.auth.User;
-import com.datagear.amlserver.service.auth.AuthenticationService;
+import com.datagear.amlserver.jwt.entity.LoginRequest;
+import com.datagear.amlserver.jwt.entity.LoginResponse;
+import com.datagear.amlserver.jwt.entity.RegisterRequest;
+import com.datagear.amlserver.jwt.entity.User;
+import com.datagear.amlserver.jwt.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

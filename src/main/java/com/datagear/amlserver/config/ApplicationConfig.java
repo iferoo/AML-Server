@@ -1,6 +1,6 @@
 package com.datagear.amlserver.config;
 
-import com.datagear.amlserver.dao.auth.UserRepository;
+import com.datagear.amlserver.jwt.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,6 +1,6 @@
 package com.datagear.amlserver.service.alert;
 
-import com.datagear.amlserver.dao.AlertRepository;
+import com.datagear.amlserver.repository.AlertRepository;
 import com.datagear.amlserver.entity.Account;
 import com.datagear.amlserver.entity.Alert;
 import org.springframework.beans.factory.annotation.Autowired;

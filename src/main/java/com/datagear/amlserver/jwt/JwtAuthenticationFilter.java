@@ -1,6 +1,6 @@
-package com.datagear.amlserver.config;
+package com.datagear.amlserver.jwt;
 
-import com.datagear.amlserver.service.auth.JwtService;
+import com.datagear.amlserver.jwt.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

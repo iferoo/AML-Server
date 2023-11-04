@@ -1,4 +1,4 @@
-package com.datagear.amlserver.entity.auth;
+package com.datagear.amlserver.jwt.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

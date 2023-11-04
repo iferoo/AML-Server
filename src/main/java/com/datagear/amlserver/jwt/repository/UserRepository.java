@@ -1,6 +1,6 @@
-package com.datagear.amlserver.dao.auth;
+package com.datagear.amlserver.jwt.repository;
 
-import com.datagear.amlserver.entity.auth.User;
+import com.datagear.amlserver.jwt.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

@@ -1,7 +1,7 @@
 package com.datagear.amlserver.service.transfer;
 
-import com.datagear.amlserver.dao.AccountRepository;
-import com.datagear.amlserver.dao.TransferRepository;
+import com.datagear.amlserver.repository.AccountRepository;
+import com.datagear.amlserver.repository.TransferRepository;
 import com.datagear.amlserver.entity.Account;
 import com.datagear.amlserver.entity.Transaction;
 import com.datagear.amlserver.entity.Transfer;
